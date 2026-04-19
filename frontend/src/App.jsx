@@ -1,6 +1,8 @@
 /**
  * App.jsx
  * 
+ * 
+ * 
  * Main application component that orchestrates the Grammar Ambiguity Checker.
  * Handles state management, API calls, and layout.
  */
