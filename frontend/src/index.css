@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-dark-900: #0a0a0f;
+  --color-dark-800: #12121a;
+  --color-dark-700: #1a1a2e;
+  --color-dark-600: #252540;
+  --color-dark-500: #2d2d4a;
+
+  --color-accent-purple: #8b5cf6;
+  --color-accent-blue: #3b82f6;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-pink: #ec4899;
+  --color-accent-green: #10b981;
+  --color-accent-amber: #f59e0b;
+  --color-accent-red: #ef4444;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Animations */
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-fade-in: fadeIn 0.6s ease-out;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+    100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.4); }
+  }
+  @keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Utilities */
+  --blur-xs: 2px;
+}
+
+/* === BASE STYLES === */
+@layer base {
+  body {
+    @apply bg-dark-900 text-gray-100 font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-500 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent-purple;
+  }
+
+  ::selection {
+    @apply bg-accent-purple/30 text-white;
+  }
+}
+
+/* === REUSABLE COMPONENTS === */
+@layer components {
+  /* Glassmorphism card */
+  .glass-card {
+    @apply bg-dark-700/50 backdrop-blur-xl border border-white/[0.06] rounded-2xl shadow-2xl;
+  }
+
+  .glass-card-hover {
+    @apply bg-dark-700/50 backdrop-blur-xl border border-white/[0.06] rounded-2xl shadow-2xl transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply border-accent-purple/30 shadow-[0_0_30px_rgba(139,92,246,0.1)];
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply relative px-8 py-3.5 rounded-xl font-semibold text-white overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-[0_0_30px_rgba(139,92,246,0.4)] scale-[1.02];
+  }
+
+  .btn-primary:active {
+    @apply scale-[0.98];
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed scale-100 shadow-none;
+  }
+
+  /* Sample grammar chip */
+  .sample-chip {
+    @apply px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all duration-200
+           bg-dark-600/60 border border-white/[0.06] text-gray-300 hover:border-accent-purple/40
+           hover:text-accent-purple hover:bg-accent-purple/10;
+  }
+
+  .sample-chip.active {
+    @apply border-accent-purple/60 text-accent-purple bg-accent-purple/15;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full bg-dark-800/80 border border-white/[0.08] rounded-xl px-4 py-3
+           text-gray-100 font-mono text-sm placeholder-gray-500 transition-all duration-300
+           focus:outline-none focus:border-accent-purple/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.1)]
+           focus:bg-dark-800;
+  }
+
+  /* Textarea */
+  .textarea-field {
+    @apply w-full bg-dark-800/80 border border-white/[0.08] rounded-xl px-4 py-3
+           text-gray-100 font-mono text-sm placeholder-gray-500 transition-all duration-300
+           focus:outline-none focus:border-accent-purple/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.1)]
+           focus:bg-dark-800 resize-none leading-relaxed;
+  }
+
+  /* Section label */
+  .section-label {
+    @apply text-xs uppercase tracking-[0.2em] font-semibold text-gray-400 mb-3 flex items-center gap-2;
+  }
+}
+
+/* === ANIMATIONS === */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated background grid */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glow orb decoration */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Grammar syntax highlighting in textarea overlay */
+.grammar-line-numbers {
+  counter-reset: line;
+}
+
+.grammar-line-numbers > div {
+  counter-increment: line;
+}
+
+.grammar-line-numbers > div::before {
+  content: counter(line);
+  @apply text-gray-600 text-xs mr-4 inline-block w-5 text-right select-none;
+}
+
+/* Parse tree node styles */
+.tree-node-nonterminal {
+  fill: #8b5cf6;
+  stroke: #a78bfa;
+  stroke-width: 2;
+}
+
+.tree-node-terminal {
+  fill: #06b6d4;
+  stroke: #22d3ee;
+  stroke-width: 2;
+}
+
+.tree-link {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 1.5;
+}
+
+/* Spinning loader */
+.loader {
+  border: 3px solid rgba(139, 92, 246, 0.1);
+  border-top: 3px solid #8b5cf6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Result banner animation */
+.result-ambiguous {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.result-not-ambiguous {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
+  border-color: rgba(16, 185, 129, 0.3);
+}
